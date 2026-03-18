@@ -29,7 +29,7 @@ void copiere_vector(vector_elemente* copie_v, vector_elemente* vector);
 /*
 	Functie ce copiaza capacitatea unui vector struct de tipul vector elemente din al doilea argument in primul si aloca memoria necesara
 	pre: o adresa catre un struct de tip vector_elemente unde se doreste copierea vectorului, o adresa catre un struct de tip vector_elemente de unde se copiaza
-	post:primul vector transmis ca argument va deveni contine aceeasi capacitate ca vectorul din al doilea argument
+	post:primul vector transmis ca argument va deveni contine aceeasi capacitate inca neocupata ca vectorul din al doilea argument
 */
 
 void copiere_capacitate_vector(vector_elemente* copie_v, vector_elemente* vector);

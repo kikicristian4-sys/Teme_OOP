@@ -12,17 +12,20 @@ void Test_creaza_vector_gol()
 	assert (exemplu.lungime == 0 );
 	assert(distruge_vector(&exemplu) == 0);
 
+
 }
 void Test_vizualizare_produse_stoc_zero(vector_elemente* vector)
 {
 	vector_elemente copie_v;
 	assert(vizualizare_produse_stoc_ordonate(vector,&copie_v) == 1);
+
 }
 
 void Test_filtrare_produse_pret_zero(vector_elemente* vector)
 {	
 	vector_elemente copie_v;
 	assert(filtrare_produse_pret(vector,&copie_v, 102.5) == 1);
+
 
 }
 
@@ -31,12 +34,15 @@ void Test_filtrare_produse_producator_zero(vector_elemente* vector)
 	
 	vector_elemente copie_v;
 	assert(filtrare_produse_producator(vector, &copie_v, "Dan\0") == 1);
+
+
 }
 
 void Test_filtrare_produse_cantitate_zero(vector_elemente* vector)
 {
 	vector_elemente copie_v;
 	assert(filtrare_produse_cantitate(vector, &copie_v, 20) == 1);
+
 }
 
 void Test_adaugare_produs(vector_elemente* vector)
@@ -65,12 +71,15 @@ void Test_distrugere_vector_cu_elemente()
 	assert(adaugare_produs(&exemplu, 102, "Armdon\0", "Da\0", "Hecule\0", 102.5, 20) == 0);
 	assert(exemplu.lungime == 2);
 	assert(exemplu.capacitate == 4);
+
 	assert(distruge_vector(&exemplu) == 0);
+
+
 }
 
 void Test_vizualizare_produse_stoc(vector_elemente* vector)
 {
-	vector_elemente copie_v;
+	vector_elemente copie_v = creaza_vector_gol();
 	vizualizare_produse_stoc_ordonate(vector, &copie_v);
 	
 	assert(id_produs(&copie_v.elemente[2]) == 101);
@@ -84,12 +93,14 @@ void Test_vizualizare_produse_stoc(vector_elemente* vector)
 	assert(cantitate_produs(&copie_v.elemente[3]) == 42);//Este declarat ca 22, insa id-ul 102 se repeta la adaugare,
 	//deci prin urmare este adaugat la cantitate
 
+	distruge_vector(&copie_v);
+
 }
 
 void Test_filtrare_produse_pret(vector_elemente* vector)
 {
 
-	vector_elemente copie_v;
+	vector_elemente copie_v = creaza_vector_gol();
 	assert(filtrare_produse_pret(vector, &copie_v, -100) == 2);
 	filtrare_produse_pret(vector,&copie_v,100);
 
@@ -116,11 +127,13 @@ void Test_filtrare_produse_pret(vector_elemente* vector)
 	assert(cantitate_produs(&copie_v.elemente[3]) == 20);
 
 
+	distruge_vector(&copie_v);
+
 }
 
 void Test_filtrare_produse_producator(vector_elemente* vector)
 {
-	vector_elemente copie_v;
+	vector_elemente copie_v = creaza_vector_gol();
 	filtrare_produse_producator(vector, &copie_v, "Dan\0");
 	assert(id_produs(&copie_v.elemente[1]) == 101);
 	assert(pret_produs(&copie_v.elemente[1]) == 102.5);
@@ -137,22 +150,24 @@ void Test_filtrare_produse_producator(vector_elemente* vector)
 	assert(pret_produs(&copie_v.elemente[1]) == 10);
 	assert(cantitate_produs(&copie_v.elemente[1]) == 20);
 
-
+	distruge_vector(&copie_v);
 
 }
 
 void Test_filtrare_produse_cantitate(vector_elemente* vector)
 {
 
-	vector_elemente copie_v;
+	vector_elemente copie_v = creaza_vector_gol();
 	assert(filtrare_produse_cantitate(vector, &copie_v, -19) == 2);
 	filtrare_produse_cantitate(vector, &copie_v, 19);
 
 	assert(id_produs(&copie_v.elemente[1]) == 101);
 	assert(pret_produs(&copie_v.elemente[1]) == 102.5);
 	assert(cantitate_produs(&copie_v.elemente[1]) == 20);
+
 	produs p = returneaza_element(&copie_v, 1);
 	assert(p.id = 101);
+
 
 	assert(id_produs(&copie_v.elemente[2]) == 102);
 	assert(pret_produs(&copie_v.elemente[2]) == 102.5);
@@ -173,7 +188,7 @@ void Test_filtrare_produse_cantitate(vector_elemente* vector)
 	assert(pret_produs(&copie_v.elemente[1]) == 102.5);
 	assert(cantitate_produs(&copie_v.elemente[1]) == 42);
 	
-
+	distruge_vector(&copie_v);
 
 }
 

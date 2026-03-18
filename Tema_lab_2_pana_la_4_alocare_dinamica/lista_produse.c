@@ -228,32 +228,44 @@ void schimba_cantitatea(vector_elemente* vector, int id,int cantitate)
 }
 
 /*
+	Functie ce copiaza capacitatea unui vector struct de tipul vector elemente din al doilea argument in primul si aloca memoria necesara
+	pre: o adresa catre un struct de tip vector_elemente unde se doreste copierea vectorului, o adresa catre un struct de tip vector_elemente de unde se copiaza
+	post:primul vector transmis ca argument va deveni contine aceeasi capacitate inca neocupata ca vectorul din al doilea argument
+*/
+
+void copiere_capacitate_vector(vector_elemente* copie_v, vector_elemente* vector)
+{
+
+	if (copie_v->capacitate != 0)
+	{
+		if (copie_v->lungime != 0)
+			distruge_vector(copie_v);
+		else
+			free(copie_v->elemente);
+	}
+
+	copie_v->capacitate = vector->capacitate;
+
+	copie_v->elemente = malloc(copie_v->capacitate * sizeof(element));
+}
+
+
+/*
 	Functie ce copiaza un vector struct de tipul vector elemente din al doilea argument in primul
 	pre: o adresa catre un struct de tip vector_elemente unde se doreste copierea vectorului, o adresa catre un struct de tip vector_elemente de unde se copiaza
 	post:primul vector transmis ca argument va deveni o copie fidela al celui de-al doilea vector
 */
 void copiere_vector(vector_elemente* copie_v, vector_elemente* vector )
 {
-	copie_v -> capacitate = vector -> capacitate;
+	copiere_capacitate_vector(copie_v,vector);
 	copie_v -> lungime = vector -> lungime;
-	copie_v -> elemente = malloc( copie_v -> capacitate * sizeof(element));
 	
 	for (int i = 1; i <= vector->lungime; i++)
 	{
-		copie_v -> elemente[i] = vector -> elemente[i];
+		element p = creaza_produs(id_produs(&vector ->elemente[i]), cantitate_produs(&vector->elemente[i]), pret_produs(&vector->elemente[i]), model_produs(&vector->elemente[i]), producator_produs(&vector->elemente[i]), tip_produs(&vector->elemente[i]));
+		copie_v -> elemente[i] = p;
 	}
 
-}
-/*
-	Functie ce copiaza capacitatea unui vector struct de tipul vector elemente din al doilea argument in primul si aloca memoria necesara
-	pre: o adresa catre un struct de tip vector_elemente unde se doreste copierea vectorului, o adresa catre un struct de tip vector_elemente de unde se copiaza
-	post:primul vector transmis ca argument va deveni contine aceeasi capacitate ca vectorul din al doilea argument
-*/
-
-void copiere_capacitate_vector(vector_elemente* copie_v, vector_elemente* vector)
-{
-	copie_v->capacitate = vector->capacitate;
-	copie_v->elemente = malloc(copie_v->capacitate * sizeof(element));
 }
 
 

@@ -211,9 +211,11 @@ int obtinere_optiune()
 int user_interface(vector_elemente* vector)
 /*
 	User interface.
+	pre: o adresa catre un struct de tipul vector_elemente
+	post: interactiunea cu utilizatorul
 */
 {
-	vector_elemente copie_v;//folosit la filtrari 
+	vector_elemente copie_v = creaza_vector_gol();//folosit la filtrari 
 	while (1)
 	{
 		printf("1.Adaugare produs\n2.Actualizare produs\n3.Stergere produs\n4.Vizualizare produse din stoc ordonate dupa pret si cantitate\n5.Vizualizare lista de produse filtrate dupa un criteriu\n6.Vizualizare lista\n7.Exit\n");
@@ -481,6 +483,7 @@ int user_interface(vector_elemente* vector)
 			break;
 		case 7:
 			printf("O zi fainaaa! :DD");
+			distruge_vector(&copie_v);
 			return 0;
 		default:
 		{
@@ -494,4 +497,6 @@ int user_interface(vector_elemente* vector)
 		}
 		}
 	}
+	
+	
 }

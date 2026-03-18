@@ -182,7 +182,8 @@ int filtrare_produse_pret(vector_elemente* vector,vector_elemente* copie_v, floa
 		if (pret_produs(&vector -> elemente[i]) <= pret)
 		{
 			nr_gasite++;
-			copie_v -> elemente[nr_gasite] = vector -> elemente[i];
+			produs p = creaza_produs(id_produs(&vector->elemente[i]), cantitate_produs(&vector->elemente[i]), pret_produs(&vector->elemente[i]), model_produs(&vector->elemente[i]), producator_produs(&vector->elemente[i]), tip_produs(&vector->elemente[i]));
+			copie_v->elemente[nr_gasite] = p;
 		}
 
 	}
@@ -217,7 +218,8 @@ int filtrare_produse_producator(vector_elemente* vector, vector_elemente* copie_
 		if (strcmp(producator_produs(&vector -> elemente[i]),producator) == 0)
 		{
 			nr_gasite++;
-			copie_v->elemente[nr_gasite] = vector->elemente[i];
+			produs p = creaza_produs(id_produs(&vector->elemente[i]), cantitate_produs(&vector->elemente[i]), pret_produs(&vector->elemente[i]), model_produs(&vector->elemente[i]), producator_produs(&vector->elemente[i]), tip_produs(&vector->elemente[i]));
+			copie_v->elemente[nr_gasite] = p;
 		}
 
 	}
@@ -256,7 +258,8 @@ int filtrare_produse_cantitate(vector_elemente* vector, vector_elemente* copie_v
 			if (cantitate_produs(&vector->elemente[i]) > cantitate)
 			{
 				nr_gasite++;
-				copie_v->elemente[nr_gasite] = vector->elemente[i];
+				produs p = creaza_produs(id_produs(&vector->elemente[i]), cantitate_produs(&vector->elemente[i]), pret_produs(&vector->elemente[i]), model_produs(&vector->elemente[i]), producator_produs(&vector->elemente[i]), tip_produs(&vector->elemente[i]));
+				copie_v->elemente[nr_gasite] = p;
 			}
 
 		}
