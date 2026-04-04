@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+#include <iostream>
 using std::string;
 
 
@@ -23,10 +23,22 @@ public:
 		pre: id_ul - int titlu - string, autor - string, gen - string, an - int
 		post: se creaza cartea
 	*/
-	Carte(int id_ul, string ti, string au, string g, int an) :id{id_ul}, titlu{ ti }, autor{ au }, gen{ g }, anul_aparitiei{ an }{};
+	Carte(const int id_ul,const string ti,const string au,const string g,const int an) :id{id_ul}, titlu{ ti }, autor{ au }, gen{ g }, anul_aparitiei{ an }{};
 
+	
 	//Constructorul de copiere
-	Carte(const Carte& alt) : id{alt.id}, titlu{ alt.titlu}, autor{alt.autor}, gen{alt.gen}, anul_aparitiei{alt.anul_aparitiei}{};
+	Carte(const Carte& alt) : id{alt.id}, titlu{ alt.titlu}, autor{alt.autor}, gen{alt.gen}, anul_aparitiei{alt.anul_aparitiei}{ std::cout<<"Copiat"; };
+
+	Carte(Carte&&) = default;
+
+	Carte& operator = (const Carte&) = default;//Cu copiere la assignement
+
+	Carte& operator = (Carte&&) = default;
+
+	Carte(Carte&) noexcept = default;
+
+	//deconstructor
+	~Carte(){};
 
 	/*
 		Functie ce returneaza titlul unei carti
@@ -41,7 +53,7 @@ public:
 		pre: 
 		post: se returneaza id-ul cartii
 	*/
-	int get_id() const;
+	int get_id() const noexcept;
 
 	/*
 	Functie ce returneaza autorul unei carti
@@ -64,7 +76,7 @@ public:
 	pre: -
 	post: se returneaza anul aparitiei cartii
 	*/
-	int get_anul_aparitiei() const;	
+	int get_anul_aparitiei() const noexcept;	
 
 	/*
 		Functie de modificare a titlului unei carti
@@ -92,7 +104,7 @@ public:
 		pre: an_nou - type  int
 		post: in carte se modifica valoarea initiala cu valoarea noua din argument
 	*/
-	void modifica_an_aparitie(const int an_nou);
+	void modifica_an_aparitie(const int an_nou) noexcept;
 
 
 };

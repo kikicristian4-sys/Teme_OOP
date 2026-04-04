@@ -8,7 +8,7 @@ using std::cout;using std::endl;using std::cin;
 
 void UI::afisare_lista(Service& service)
 {
-	for (Carte& c : service.repo.lista)
+	for (const Carte& c : service.repo.lista)
 	{
 	cout<<"ID: "<<c.get_id()<<" titlul: "<<c.get_titlu()<<" autorul: "<<c.get_autor()<<" gen: "<<c.get_gen()<<" anul aparitiei: "<<c.get_anul_aparitiei()<<endl;
 	}
@@ -16,7 +16,7 @@ void UI::afisare_lista(Service& service)
 
 void UI::afisare_copie_lista(Service& service)
 {
-	for (Carte& c : service.lista_copie)
+	for (const Carte& c : service.lista_copie)
 	{
 		cout << "ID: " << c.get_id() << " titlul: " << c.get_titlu() << " autorul: " << c.get_autor() << " gen: " << c.get_gen() << " anul aparitiei: " << c.get_anul_aparitiei() << endl;
 	}
@@ -38,7 +38,7 @@ int UI::get_int()
 		int ok = 0;
 		for (int i = 0; i < optiune.length(); i++)
 		{
-			if (isdigit(optiune[i]) == 0 && optiune[i] != '-')
+			if (isdigit(optiune.at(i)) == 0 && optiune.at(i) != '-')
 			{
 				cout << "Valoarea introdusa nu este de tip intreg, va rog reincercati!" << endl << "Valoare: ";
 				elibereaza_buffer();
@@ -48,7 +48,7 @@ int UI::get_int()
 		}
 		if (ok == 0)
 		{
-			int optiune_int = atoi(optiune.c_str());
+			int const optiune_int = atoi(optiune.c_str());
 			return optiune_int;
 		}
 		
@@ -69,7 +69,7 @@ void UI::meniu_utilizator(Service& service)
 		case 1:
 		{
 			string titlu, autor, gen;
-			int id, anul_scrierii;
+			int id = 0, anul_scrierii = 0;
 
 			cout << "Id ul cartii: ";
 			id = get_int();
@@ -84,12 +84,16 @@ void UI::meniu_utilizator(Service& service)
 			anul_scrierii = get_int();
 			elibereaza_buffer();
 			switch (service.adauga_carte_service(id, titlu, autor, gen, anul_scrierii)) {
-
+			case 0:
+				break;
 			case 1:
 				cout << "Id-ul deja exista.\n";
 				break;
 			case -10:
 				cout<<"Id-ul dat este negativ!\n";
+				break;
+			case -20:
+				cout<<"Id-ul dat este diferit, insa informatiile cartii sunt exact la fel ca ale alteia";
 				break;
 			case -30: 
 				cout<<"Anul dat este negativ!\n";
@@ -97,6 +101,8 @@ void UI::meniu_utilizator(Service& service)
 			case -40:
 				cout<<"Anul dat este cu mult peste anul curent!\n";
 				break;
+			default:
+			cout<<' ';
 			}
 				
 			break;
@@ -109,6 +115,8 @@ void UI::meniu_utilizator(Service& service)
 			elibereaza_buffer();
 			switch (service.sterge_carte_service(id))
 			{
+				case 0:
+					break;
 				case 1:
 					cout<<"Cartea nu exista!\n";
 					break;
@@ -118,7 +126,10 @@ void UI::meniu_utilizator(Service& service)
 				case -10:
 					cout<<"Id-ul dat este negativ!\n";
 					break;
+				default:
+					cout << ' ';
 			}
+			break;
 		}
 			
 		case 3:
@@ -147,6 +158,8 @@ void UI::meniu_utilizator(Service& service)
 					cin>>titlu;
 					switch (service.modificare_titlu_service(id, titlu))
 					{
+						case 0:
+							break;
 						case 1:
 							cout << "Nu exista id-ul in lista\n";
 							break;
@@ -156,6 +169,8 @@ void UI::meniu_utilizator(Service& service)
 						case -10:
 							cout<<"Id-ul dat este negativ!\n";
 							break;
+						default:
+							cout << ' ';
 					}
 					break;
 					
@@ -171,6 +186,8 @@ void UI::meniu_utilizator(Service& service)
 						cin >> autor;
 						switch (service.modificare_autor_service(id, autor))
 						{
+						case 0:
+							break;
 						case 1:
 							cout << "Nu exista id-ul in lista\n";
 							break;
@@ -180,6 +197,8 @@ void UI::meniu_utilizator(Service& service)
 						case -10:
 							cout << "Id-ul dat este negativ!\n";
 							break;
+						default:
+							cout << ' ';
 						}
 						break;
 					}
@@ -194,6 +213,8 @@ void UI::meniu_utilizator(Service& service)
 						cin >> gen;
 						switch (service.modificare_gen_service(id, gen))
 						{
+						case 0:
+							break;
 						case 1:
 							cout << "Nu exista id-ul in lista\n";
 							break;
@@ -203,18 +224,22 @@ void UI::meniu_utilizator(Service& service)
 						case -10:
 							cout << "Id-ul dat este negativ!\n";
 							break;
+						default:
+							cout << ' ';
 						}
 						break;
 					}
 					case 4:
 					{
-						int id,an_nou;
+						int id = 0,an_nou = 0;
 						cout << "Id-ul cartii: ";
 						id = get_int();
 						cout << "Noul an de aparitie al cartii: ";
 						an_nou = get_int();
 						switch (service.modificare_an_aparitie_service(id, an_nou))
 						{
+						case 0:
+							break;
 						case 1:
 							cout << "Nu exista id-ul in lista\n";
 							break;
@@ -230,6 +255,9 @@ void UI::meniu_utilizator(Service& service)
 						case -40:
 							cout<<"Anul dat este mai mare decat anul curent!\n";
 							break;
+						default:
+							cout << ' ';
+							
 						}
 						
 					break;
@@ -259,7 +287,7 @@ void UI::meniu_utilizator(Service& service)
 			cout << "Anul aparitiei cautate: ";
 			anul_scrierii = get_int();
 
-			int id = service.cautare_carte_specifica_service(titlu,autor,gen,anul_scrierii);
+			int const id = service.cautare_carte_specifica_service(titlu,autor,gen,anul_scrierii);
 			switch (id)
 			{
 				case 0:
@@ -294,9 +322,12 @@ void UI::meniu_utilizator(Service& service)
 					int an;
 						cout<<"Anul dupa care doriti sa filtrati: ";
 						an = get_int();
-						int posib = service.filtrare_dupa_an_aparitie(an);
+						int const posib = service.filtrare_dupa_an_aparitie(an);
 						switch (posib)
 						{
+						case 0:
+							afisare_copie_lista(service);
+							break;
 						case 1:
 							cout << "Nu s-au gasit asemenea carti.\n";
 							break;
@@ -309,6 +340,8 @@ void UI::meniu_utilizator(Service& service)
 						case -40:
 							cout << "Anul dat este mai mare decat anul curent!\n";
 							break;
+						default:
+							cout << ' ';
 					
 						}	
 						break;
@@ -318,7 +351,7 @@ void UI::meniu_utilizator(Service& service)
 						string titlu;
 						cout << "Titlul cartii dupa care doriti sa filtrati: ";
 						cin >> titlu;
-						int posib = service.filtrare_dupa_titlu(titlu);
+						int const posib = service.filtrare_dupa_titlu(titlu);
 						if (posib == 1)
 							cout << "Nu s-au gasit asemenea carti.\n";
 						else

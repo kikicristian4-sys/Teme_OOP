@@ -1,20 +1,20 @@
 #include "validare.h"
 #include "chrono"
 
-int Validare::validare_id(int id)
+int Validare::validare_id(int id) noexcept
 {
 	if(id < 0 )
 		return -10;
 	return 0;
 }
 
-int Validare::get_current_year() {
+int Validare::get_current_year() noexcept {
 	using namespace std::chrono;
 	return static_cast<int>(
 		year_month_day{ time_point_cast<days>(system_clock::now()) }.year());
 }
 
-int Validare::validare_an(int an)
+int Validare::validare_an(int an) noexcept
 {
 	if(an < 0)
 		return -30;

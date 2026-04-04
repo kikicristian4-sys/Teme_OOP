@@ -61,7 +61,7 @@ int Service::filtrare_dupa_titlu(string titlu)
 		return 2;
 	this->lista_copie.clear();
 	int rez = 1;
-	for (Carte& c : this->repo.lista)
+	for (const Carte& c : this->repo.lista)
 		{
 		if (c.get_titlu().compare(titlu) == 0)
 		{
@@ -83,7 +83,7 @@ int Service::filtrare_dupa_an_aparitie(int an_aparitie)
 
 	this->lista_copie.clear();
 	int rez = 1;
-	for (Carte& c : this->repo.lista)
+	for (const Carte& c : this->repo.lista)
 	{
 		if (c.get_anul_aparitiei() == an_aparitie)
 		{
@@ -96,7 +96,7 @@ int Service::filtrare_dupa_an_aparitie(int an_aparitie)
 }
 
 void Service::copie_vector_principat_in_vector_copie() {
-	for (Carte& c : this->repo.lista)
+	for (const Carte& c : this->repo.lista)
 	{
 		this->lista_copie.push_back(c);
 	}

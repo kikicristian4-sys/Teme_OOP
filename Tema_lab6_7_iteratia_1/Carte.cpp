@@ -2,7 +2,7 @@
 #include <string>
 
 
-int Carte::get_id() const {
+int Carte::get_id()  const noexcept {
 	return this->id;
 }
 
@@ -18,7 +18,7 @@ string Carte::get_gen() const {
 	return this -> gen;
 }
 
-int Carte::get_anul_aparitiei() const {
+int Carte::get_anul_aparitiei() const noexcept{
 	return this -> anul_aparitiei;
 }
 
@@ -33,6 +33,6 @@ void Carte::modifica_gen(string gen_nou) {
 	this -> gen = gen_nou;
 }
 
-void Carte::modifica_an_aparitie(int an_nou) {
+void Carte::modifica_an_aparitie(int an_nou) noexcept {
 	this -> anul_aparitiei = an_nou;
 }

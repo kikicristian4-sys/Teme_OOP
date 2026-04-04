@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-bool Repository::cautare_carte(int id) {
+bool Repository::cautare_carte(int id) noexcept {
 
 	for (const Carte& c : lista)
 	{
@@ -15,11 +15,29 @@ bool Repository::cautare_carte(int id) {
 	return false;
 }
 
+bool Repository::exact_la_fel_ca_alta_carte(const Carte& c){
+	
+	for (const Carte& carte : lista)
+	{
+		if(carte.get_anul_aparitiei() == c.get_anul_aparitiei() && 
+		carte.get_autor().compare(c.get_autor()) == 0 && 
+			carte.get_titlu().compare(c.get_titlu()) == 0 &&
+			carte.get_gen().compare(c.get_gen()) == 0
+		)
+		return true;
+	}
+	return false;
+
+
+}
 
 int Repository::adauga_carte(const Carte& c) {
 	
 	if(cautare_carte(c.get_id()) == true)
 		return 1;
+
+	if(exact_la_fel_ca_alta_carte(c) == true)
+		return -20;
 	
 	lista.push_back(c);
 	return 0;

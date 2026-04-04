@@ -18,7 +18,14 @@ class Repository
 		pre: id - type int pozitiv
 		post: returneaza true daca exista, false daca nu
 	*/
-	bool cautare_carte(int id);
+	bool cautare_carte(int id) noexcept;
+
+	/*
+		Functie ce cauta o carte dupa toate informatiile inafara de id
+		pre: c - type carte
+		post: returneaza true daca exista, false daca nu
+	*/
+	bool exact_la_fel_ca_alta_carte(const Carte& c);
 
 	public:
 	/*
