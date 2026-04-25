@@ -3,7 +3,8 @@
 class UI
 {
 private:
-
+	//Functie ce afiseaza continutul dintr-o harta
+	void afisare_harta(std::unordered_map <std::string, Carte_dto> harta);
 	//Functie ce afiseaza continutul din cos
 	void afisare_cos(const Service& service);
 	//Functie ce afiseaza lista din repo

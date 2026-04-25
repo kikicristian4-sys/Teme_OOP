@@ -6,6 +6,19 @@
 
 using std::cout;using std::endl;using std::cin;
 
+
+void UI::afisare_harta(std::unordered_map <std::string, Carte_dto> harta)
+{
+	
+	 
+	std::unordered_map<std::string, Carte_dto>::iterator it
+		= harta.begin();
+	 
+	cout<<"Autor    Frecventa\n";
+	for (auto i = harta.begin(); i != harta.end(); i++)
+		cout<<i->first<<"    "<< i->second.get_frecventa()<< std::endl;
+	
+}
 	
 void UI::afisare_lista(const Service& service)
 {
@@ -85,7 +98,7 @@ void UI::meniu_utilizator(Service& service)
 	int optiune = 1;
 	while (optiune != 0)
 	{
-		cout << "1.Adaugare carte\n2.Stergere carte dupa id.\n3.Afisare lista.\n4.Modificare carte.\n5.Cautare carte.\n6.Filtrare carte.\n7.Sortare carti.\n8.Cos\n9.Exit\nOptiune:";
+		cout << "1.Adaugare carte\n2.Stergere carte dupa id.\n3.Afisare lista.\n4.Modificare carte.\n5.Cautare carte.\n6.Filtrare carte.\n7.Sortare carti.\n8.Cos\n9.Frecventa autorilor\n10.Exit\nOptiune:";
 		optiune = get_int();
 		elibereaza_buffer();
 		switch (optiune) {
@@ -144,7 +157,7 @@ void UI::meniu_utilizator(Service& service)
 			while (optiune_1 != 0)
 			{
 				cout << "1.Modificare titlu.\n2.Modificare autor.\n3.Modificare gen.\n4.Modificare an aparitie.\n5.Inapoi\nOptiune: ";
-				cin >> optiune_1;
+				optiune_1 = get_int();
 				elibereaza_buffer();
 				switch (optiune_1)
 				{
@@ -257,7 +270,7 @@ void UI::meniu_utilizator(Service& service)
 			while (optiune_2 != 0)
 			{
 				cout << "Filtrare dupa:\n1.Anul aparitiei.\n2.Titlul cartii.\n3.back\nOptiune:";
-				cin >> optiune_2;
+				optiune_2= get_int();
 				switch (optiune_2)
 				{
 				case 1:
@@ -306,7 +319,7 @@ void UI::meniu_utilizator(Service& service)
 			while (optiune_3 != 0)
 			{
 				cout << "1.Sortare dupa titlu.\n2.Sortare dupa autor.\n3.Sortare dupa anul aparitiei + gen.\n4.Inapoi\nOptiune:";
-				cin >> optiune_3;
+				optiune_3 = get_int();
 				switch (optiune_3)
 				{
 				case 1:
@@ -428,7 +441,17 @@ void UI::meniu_utilizator(Service& service)
 			}
 		}	
 		break;
+
 		case 9:
+		{
+			std::unordered_map <std::string, Carte_dto> map;
+			map = service.frecventa_autor();
+			afisare_harta(map);
+		}
+			
+		break;
+
+		case 10:
 			cout << "O zi buna! :DD" << endl;
 			optiune = 0;
 			break;

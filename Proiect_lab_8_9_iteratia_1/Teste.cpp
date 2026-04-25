@@ -564,10 +564,26 @@ void Teste::Test_service(Service& service)
 
 
 	}
+	
+
 
 
 	//Final testare filtrari si sortari
 
+
+	//Testare frecventa
+
+	service.adauga_carte_service(12, "A", "Mos_Martin", "Documentary", 1925);
+
+	std::unordered_map <std::string, Carte_dto> harta;
+
+	harta = service.frecventa_autor();
+	assert(harta.at("Mos_Martin").get_frecventa() == 2);
+	assert(harta.at("Big Man").get_frecventa() == 1);
+
+
+	service.sterge_carte_service(12);
+	//Final testare frecventa
 	assert(service.cautare_carte_specifica_service("A", "Big Man", "Documentary", 1999) == 1);
 
 
@@ -648,6 +664,16 @@ void Teste::Test_cos_din_service(Service& service)
 	
 	//Testare generare cos
 	
+	try {
+		service.genereaza_cos(-4);
+		assert(false);
+	}
+	catch (ValidationError&)
+	{
+		
+		assert(true);
+	}
+
 	try{ 
 	service.genereaza_cos(4);
 	assert(false);
@@ -656,14 +682,8 @@ void Teste::Test_cos_din_service(Service& service)
 	{
 		assert(true);
 	}
-	try {
-		service.genereaza_cos(-4);
-		assert(false);
-	}
-	catch (ValidationError&)
-	{
-		assert(true);
-	}
+
+	
 
 	
 	service.genereaza_cos(2);

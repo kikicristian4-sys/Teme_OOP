@@ -3,6 +3,47 @@
 #include <iostream>
 using std::string;
 
+class Carte_dto {
+
+	private:
+		int frecventa_autor;
+		string autor;
+	public:
+		
+		Carte_dto(string autor): autor{autor}{
+		frecventa_autor = 1;
+		};
+
+
+		Carte_dto(const Carte_dto& alt): autor{alt.autor}, frecventa_autor{alt.frecventa_autor}{};
+
+		Carte_dto(Carte_dto&&) = default;
+
+		Carte_dto& operator = (const Carte_dto &) = default;//Cu copiere la assignement
+		
+		Carte_dto& operator = (Carte_dto&&) = default;
+
+		Carte_dto(Carte_dto&) noexcept = default;
+
+		//deconstructor
+		~Carte_dto() {};
+
+		/*
+		Functie de crestere a frecventei pentru un autor.
+		pre: -
+		post: frecventa creste
+		*/
+		void crestere_frecventa();
+
+		/*
+		Functie de returnare a frecventei
+		pre: -
+		post: se returneaza frecventa sub forma unui int
+		*/
+		int get_frecventa();
+		
+
+};
 
 class Carte {
 

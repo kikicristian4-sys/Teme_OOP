@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <random> // std::default_random_engine
 #include <chrono> // std::chrono::system_clock
-
+#include <unordered_map>
 class Service {
 
 private:
@@ -25,6 +25,14 @@ public:
 	Repository repo;
 	vector <Carte> lista_copie;
 	Cos cos;
+
+
+	/*
+	Functie ce returneaza un dictionar cu frecvente si autori
+	pre: -
+	post: se returneaza dictionarul
+	*/
+	std::unordered_map <std::string, Carte_dto> frecventa_autor();
 
 	void goleste_cos_service() noexcept;
 	/*
