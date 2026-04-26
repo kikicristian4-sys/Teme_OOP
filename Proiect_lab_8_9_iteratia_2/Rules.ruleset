@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules" ToolsVersion="18.0">
+  <Include Path="cppcorecheckrules.ruleset" Action="Default" />
+</RuleSet>
