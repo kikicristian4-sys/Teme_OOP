@@ -32,7 +32,7 @@ public:
 	//constructor 
 	Service(string fisier) : fisier{ fisier }, repo(fisier){};
 
-	Service(const Service& alt) : fisier{ alt.fisier } {};
+	Service(const Service& alt) : fisier{ alt.fisier } , repo(alt.fisier){};
 
 	Service(Service&&) = default;
 
@@ -43,7 +43,12 @@ public:
 	Service(Service&) noexcept = default;
 
 	//deconstructor
-	Service() {};
+	~Service() {
+		for (auto u : undoActions)
+		{
+				delete u;
+		}
+	};
 
 	/*
 	Functie ce returneaza un dictionar cu frecvente si autori
@@ -86,7 +91,7 @@ public:
 	pre: id - type int, titlu - type string, autor - type string, gen - type string, an_aparitie - type int
 	post: se returneaza 0 daca totul a fost okay, exceptie in orice alt caz
 	*/
-	void adauga_carte_service(int id, string titlu, string autor, string gen, int an_aparitie);
+	int adauga_carte_service(int id, string titlu, string autor, string gen, int an_aparitie);
 
 	/*
 		Functia de stergere carte din service

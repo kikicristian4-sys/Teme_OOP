@@ -1,14 +1,14 @@
 #include "Carte.h"
 #include <string>
 
-void Carte_dto::crestere_frecventa()
+void Carte_dto::crestere_frecventa() noexcept
 {
 	frecventa_autor++;
 }
 
 
 
-int Carte_dto::get_frecventa()
+int Carte_dto::get_frecventa() noexcept
 {
 	return frecventa_autor;
 }

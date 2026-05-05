@@ -12,10 +12,10 @@ int main()
 	{
 		Service service_test("Storage_test.txt");
 		Teste Tests;
-		UI ui;
+		//UI ui;
 		Tests.Testeaza_tot(service_test);
 		Service service_oficial("Storage.txt");
-		ui.meniu_utilizator(service_oficial);
+		//ui.meniu_utilizator(service_oficial);
 
 	}
 	if (_CrtDumpMemoryLeaks() == 1)

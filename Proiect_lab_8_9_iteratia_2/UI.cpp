@@ -107,7 +107,7 @@ void UI::meniu_utilizator(Service& service)
 	int optiune = 1;
 	while (optiune != 0)
 	{
-		cout << "1.Adaugare carte\n2.Stergere carte dupa id.\n3.Afisare lista.\n4.Modificare carte.\n5.Cautare carte.\n6.Filtrare carte.\n7.Sortare carti.\n8.Cos\n9.Frecventa autorilor\n10.Exit\nOptiune:";
+		cout << "1.Adaugare carte\n2.Stergere carte dupa id.\n3.Afisare lista.\n4.Modificare carte.\n5.Cautare carte.\n6.Filtrare carte.\n7.Sortare carti.\n8.Cos\n9.Frecventa autorilor\n10.Undo\n11.Exit\nOptiune:";
 		optiune = get_int();
 		elibereaza_buffer();
 		switch (optiune) {
@@ -255,11 +255,11 @@ void UI::meniu_utilizator(Service& service)
 			string titlu, autor, gen;
 			int anul_scrierii;
 			cout << "Titlul cartii cautate: ";
-			getline(cin, autor);
+			getline(cin, titlu);
 			cout << "Autorul cartii cautate: ";
 		    getline(cin,autor);
 			cout << "Genul cartii cautate: ";
-			getline(cin, autor);
+			getline(cin, gen);
 			cout << "Anul aparitiei cautate: ";
 			anul_scrierii = get_int();
 
@@ -303,6 +303,7 @@ void UI::meniu_utilizator(Service& service)
 				{
 					string titlu;
 					cout << "Titlul cartii dupa care doriti sa filtrati: ";
+					getline(cin, titlu);
 					getline(cin, titlu);
 					try {
 						service.filtrare_dupa_titlu(titlu);
@@ -391,6 +392,7 @@ void UI::meniu_utilizator(Service& service)
 						string carte;
 						cout<<"Va rog sa introduceti titlul cartii: ";
 						getline(cin, carte);
+						getline(cin, carte);
 						try {
 							if (service.adauga_carte_in_cos(carte) == 1)
 							{
@@ -434,6 +436,7 @@ void UI::meniu_utilizator(Service& service)
 					cout<<"Va rog sa introduceti numele fisierului: ";
 						string nume;
 						getline(cin, nume);
+						getline(cin, nume);
 						service.export_cos_in_fisier_service(nume);
 						afisare_cos(service);
 					}
@@ -463,6 +466,17 @@ void UI::meniu_utilizator(Service& service)
 		break;
 
 		case 10:
+		{
+			try{ 
+			service.undo();
+			}
+			catch (const ValidationError& err)
+			{
+				cout<<err.get_Message()<<endl;
+			}
+		}
+		break;
+		case 11:
 			cout << "O zi buna! :DD" << endl;
 			optiune = 0;
 			break;

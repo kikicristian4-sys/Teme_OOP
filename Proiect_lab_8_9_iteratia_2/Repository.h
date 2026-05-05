@@ -25,14 +25,14 @@ private:
 	*/
 	bool exact_la_fel_ca_alta_carte(const Carte& c);
 
-	
+
 
 public:
 
 	//constructor 
-	Repository(string fisier): fisier{fisier}{};
+	Repository(string fisier) : fisier{ fisier } {};
 
-	Repository(const Repository &alt) : fisier{alt.fisier}{};
+	Repository(const Repository& alt) : fisier{ alt.fisier } {};
 
 	Repository(Repository&&) = default;
 

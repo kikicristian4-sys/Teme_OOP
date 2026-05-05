@@ -15,7 +15,7 @@ class Carte_dto {
 		};
 
 
-		Carte_dto(const Carte_dto& alt): autor{alt.autor}, frecventa_autor{alt.frecventa_autor}{};
+		Carte_dto(const Carte_dto& alt): autor{alt.autor}, frecventa_autor{alt.frecventa_autor}{std::cout<<"Copied"; };
 
 		Carte_dto(Carte_dto&&) = default;
 
@@ -33,14 +33,14 @@ class Carte_dto {
 		pre: -
 		post: frecventa creste
 		*/
-		void crestere_frecventa();
+		void crestere_frecventa() noexcept;
 
 		/*
 		Functie de returnare a frecventei
 		pre: -
 		post: se returneaza frecventa sub forma unui int
 		*/
-		int get_frecventa();
+		int get_frecventa() noexcept;
 		
 
 };

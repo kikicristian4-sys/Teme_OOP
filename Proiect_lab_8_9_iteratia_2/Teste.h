@@ -3,6 +3,8 @@
 class Teste {
 
 private:
+	//Functie de test a clasei Undo
+	void Test_Undo(Service& service);
 	//Functie de test a clasei de carti
 	void Test_clasa_carte();
 

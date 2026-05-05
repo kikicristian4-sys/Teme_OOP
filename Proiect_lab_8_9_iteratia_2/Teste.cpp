@@ -33,6 +33,65 @@ void Teste::Test_clasa_carte()
 	assert(carte1.get_id() == 1);
 }
 
+void Teste::Test_Undo(Service& service)
+{
+	try {
+	service.undo();
+	assert(false);
+	}
+	catch (ValidationError&)
+	{
+		assert(true);
+	}
+
+	assert(service.adauga_carte_service(1, "A", "Big Man", "Documentary", 1999) == 0);
+	service.undo();
+
+	try {
+		service.sterge_carte_service(23);
+		assert(false);
+	}
+	catch (ValidationError&)
+	{
+		assert(true);
+	}
+	assert(service.adauga_carte_service(1, "A", "Big Man", "Documentary", 1999) == 0);
+
+	assert(service.modificare_titlu_service(1, "Abraham") == 0);
+	assert(service.modificare_autor_service(1, "Abraham") == 0);
+	assert(service.modificare_gen_service(1, "Abraham") == 0);
+	assert(service.modificare_an_aparitie_service(1, 2000) == 0);
+
+	assert(service.cautare_carte_specifica_service("Abraham", "Abraham", "Abraham", 2000) == 1);
+	service.undo();
+	assert(service.cautare_carte_specifica_service("Abraham", "Abraham", "Abraham",1999) == 1);
+	service.undo();
+	assert(service.cautare_carte_specifica_service("Abraham", "Abraham", "Documentary", 1999) == 1);
+	service.undo();
+	assert(service.cautare_carte_specifica_service("Abraham", "Big Man", "Documentary", 1999) == 1);
+	service.undo();
+	assert(service.cautare_carte_specifica_service("A", "Big Man", "Documentary", 1999) == 1);
+
+	service.sterge_carte_service(1);
+
+	try {
+		service.cautare_carte_specifica_service("A", "Big Man", "Documentary", 1999);
+		assert(false);
+	}
+	catch (ValidationError&)
+	{
+		assert(true);
+	}
+
+
+	service.undo();
+	assert(service.cautare_carte_specifica_service("A", "Big Man", "Documentary", 1999) == 1);
+
+	service.sterge_carte_service(1);
+
+}
+
+
 void Teste::Test_repo(Service& service) {
 
 	try {
@@ -133,7 +192,7 @@ void Teste::Test_repo(Service& service) {
 
 
 
-	assert(service.repo.modificare_an_aparitie(10, 2000) == 0);
+	service.repo.modificare_an_aparitie(10, 2000);
 
 	try {
 		service.repo.modificare_an_aparitie(20, 2000);
@@ -145,7 +204,7 @@ void Teste::Test_repo(Service& service) {
 	}
 
 
-	assert(service.repo.modificare_autor(10, "Mos_Martin") == 0);
+	service.repo.modificare_autor(10, "Mos_Martin");
 
 	try {
 		service.repo.modificare_autor(20, "Mos_Martin");
@@ -157,7 +216,7 @@ void Teste::Test_repo(Service& service) {
 	}
 
 
-	assert(service.repo.modificare_titlu(10, "Mos_Martin") == 0);
+	service.repo.modificare_titlu(10, "Mos_Martin");
 
 	try {
 		service.repo.modificare_titlu(20, "Mos_Martin");
@@ -169,7 +228,7 @@ void Teste::Test_repo(Service& service) {
 	}
 
 
-	assert(service.repo.modificare_gen(10, "Mos_Martin") == 0);
+	service.repo.modificare_gen(10, "Mos_Martin");
 
 	try {
 		service.repo.modificare_gen(20, "Mos_Martin");
@@ -201,8 +260,8 @@ void Teste::Test_repo(Service& service) {
 		assert(true);
 	}
 
-	assert(service.repo.sterge_carte(10) == 0);
-	assert(service.repo.sterge_carte(1) == 0);
+	service.repo.sterge_carte(10);
+	service.repo.sterge_carte(1);
 }
 
 void Teste::Test_service(Service& service)
@@ -753,7 +812,9 @@ void Teste::Test_cos_din_service(Service& service)
 
 void Teste::Testeaza_tot(Service& service)
 {
+	
 	Teste::Test_clasa_carte();
+	Teste::Test_Undo(service);
 	Teste::Test_repo(service);
 	Teste::Test_service(service);
 	Teste::Test_cos();

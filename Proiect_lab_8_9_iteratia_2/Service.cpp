@@ -12,16 +12,16 @@ std::unordered_map <std::string, Carte_dto> Service::frecventa_autor()
 	std::unordered_map <std::string, Carte_dto> harta;
 	for (const Carte& c : lista)
 	{
-		Carte_dto DTO (c.get_autor());
-		if(harta.find(c.get_autor()) != harta.end())
+		Carte_dto DTO(c.get_autor());
+		if (harta.find(c.get_autor()) != harta.end())
 			harta.at(c.get_autor()).crestere_frecventa();
 		else
 		{
-			harta.insert({c.get_autor(), DTO});
+			harta.insert({ c.get_autor(), DTO });
 		}
 	}
-	
-	
+
+
 	return harta;
 }
 
@@ -45,8 +45,8 @@ void Service::genereaza_cos(int n)
 
 	if (n > lista.size())
 		throw ValidationError("N este mai mare decat numarul de elemente din lista!\n");
-	
-		
+
+
 
 	copie_vector_principat_in_vector_copie();
 
@@ -56,7 +56,7 @@ void Service::genereaza_cos(int n)
 	int i = 0;
 	for (const Carte& c : lista_copie)
 	{
-		if(i < n)
+		if (i < n)
 			cos.adauga_carte_in_cos(c);
 		else
 			break;
@@ -75,7 +75,7 @@ int Service::adauga_carte_in_cos(string titlu)
 	{
 		if ((c.get_titlu()).compare(titlu) == 0)
 		{
-			nr_carti ++;
+			nr_carti++;
 			this->lista_copie.push_back(c);
 			carte = &c;
 		}
@@ -83,11 +83,11 @@ int Service::adauga_carte_in_cos(string titlu)
 
 	if (nr_carti == 1)
 	{
-		Carte c(carte->get_id(),carte->get_titlu(), carte->get_autor(), carte->get_gen(), carte->get_anul_aparitiei());
+		Carte c(carte->get_id(), carte->get_titlu(), carte->get_autor(), carte->get_gen(), carte->get_anul_aparitiei());
 		cos.adauga_carte_in_cos(c);
 		return 0;
 	}
-	if(nr_carti == 0)
+	if (nr_carti == 0)
 		throw ValidationError("Nici o carte nu a fost gasita care sa aibe titlul dat!\n");
 	return 1;
 }
@@ -110,15 +110,16 @@ void Service::adauga_carte_in_cos_dupa_id(int id)
 	}
 }
 
-void Service::adauga_carte_service(int id, string titlu, string autor, string gen, int an_aparitie)
+int Service::adauga_carte_service(int id, string titlu, string autor, string gen, int an_aparitie)
 {
 	validator.validare_id(id);
 	validator.validare_an(an_aparitie);
 	Carte carte1(id, titlu, autor, gen, an_aparitie);
 
-	
+
 	this->repo.adauga_carte(carte1);
-	undoActions.push_back(new UndoAdauga{carte1, repo});
+	undoActions.push_back(new UndoAdauga{ carte1, repo });
+	return 0;
 }
 
 int Service::sterge_carte_service(int id)
@@ -127,7 +128,7 @@ int Service::sterge_carte_service(int id)
 	Carte copie_carte;
 
 	copie_carte = this->repo.sterge_carte(id);
-	undoActions.push_back(new UndoStergere{copie_carte, repo});
+	undoActions.push_back(new UndoStergere{ copie_carte, repo });
 	return 0;
 }
 
@@ -135,8 +136,8 @@ int Service::modificare_titlu_service(int id, string titlu)
 {
 	validator.validare_id(id);
 	Carte carte;
-	 carte = this->repo.modificare_titlu(id, titlu);
-	 undoActions.push_back(new UndoModificare(carte,repo));
+	carte = this->repo.modificare_titlu(id, titlu);
+	undoActions.push_back(new UndoModificare(carte, repo));
 	return 0;
 }
 
@@ -229,7 +230,7 @@ void Service::copie_vector_principat_in_vector_copie() {
 }
 
 int Service::sortare_dupa_titlu()
-{	
+{
 	vector <Carte> lista = repo.citire_din_fisier();
 
 	if (lista.size() == 0)
@@ -240,8 +241,8 @@ int Service::sortare_dupa_titlu()
 	copie_vector_principat_in_vector_copie();
 
 
-	std::sort(lista_copie.begin(), lista_copie.end(), [](const Carte &x, const Carte &y)
-	{return x.get_titlu().compare(y.get_titlu()) < 0;});
+	std::sort(lista_copie.begin(), lista_copie.end(), [](const Carte& x, const Carte& y)
+		{return x.get_titlu().compare(y.get_titlu()) < 0;});
 	/*
 	 for (int i = 0; i < this->lista_copie.size(); i++)
 	{
@@ -252,7 +253,7 @@ int Service::sortare_dupa_titlu()
 			}
 	}
 	*/
-	
+
 
 	return 0;
 }
@@ -273,17 +274,17 @@ int Service::sortare_dupa_autor()
 	std::sort(lista_copie.begin(), lista_copie.end(), [](const Carte& x, const Carte& y)
 		{return x.get_autor().compare(y.get_autor()) < 0;});
 
-		/*
-		for (int i = 0; i < this->lista_copie.size(); i++)
+	/*
+	for (int i = 0; i < this->lista_copie.size(); i++)
+	{
+	for (int j = i + 1; j < this->lista_copie.size(); j++)
+		if (this->lista_copie.at(i).get_autor().compare(this->lista_copie.at(j).get_autor()) > 0)
 		{
-		for (int j = i + 1; j < this->lista_copie.size(); j++)
-			if (this->lista_copie.at(i).get_autor().compare(this->lista_copie.at(j).get_autor()) > 0)
-			{
-				std::swap(lista_copie.at(i), lista_copie.at(j));
-			}
+			std::swap(lista_copie.at(i), lista_copie.at(j));
 		}
-		*/
-	
+	}
+	*/
+
 
 	return 0;
 }
@@ -299,14 +300,14 @@ int Service::sortare_an_si_gen()
 	this->lista_copie.clear();
 
 	copie_vector_principat_in_vector_copie();
-	
+
 	std::sort(lista_copie.begin(), lista_copie.end(), [](const Carte& x, const Carte& y)
-		{if(x.get_anul_aparitiei() == y.get_anul_aparitiei())
-			return x.get_gen().compare(y.get_gen()) < 0;
+		{if (x.get_anul_aparitiei() == y.get_anul_aparitiei())
+		return x.get_gen().compare(y.get_gen()) < 0;
 		else
-			return x.get_anul_aparitiei() < y.get_anul_aparitiei();
-			});
-	
+		return x.get_anul_aparitiei() < y.get_anul_aparitiei();
+		});
+
 	/*
 	for (int i = 0; i < this->lista_copie.size(); i++)
 	{
@@ -325,9 +326,9 @@ int Service::sortare_an_si_gen()
 			}
 
 	}
-	
+
 	*/
-	
+
 
 	return 0;
 
@@ -338,7 +339,7 @@ void Service::undo() {
 		throw ValidationError{ "Nu mai exista operatii" };
 	}
 	ActiuneUndo* act = undoActions.back();
-	act->doUndo(); 
+	act->doUndo();
 	undoActions.pop_back();
 	delete act;
 }

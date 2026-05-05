@@ -9,7 +9,7 @@ void Repository::updatare_fisier(vector<Carte> l)
 	std::ofstream fout(fisier);
 	for (const Carte& c : l)
 	{
-		fout<<c.get_id()<<","<<c.get_titlu()<<","<<c.get_autor()<<","<<c.get_gen()<<","<<c.get_anul_aparitiei()<<std::endl;
+		fout << c.get_id() << "," << c.get_titlu() << "," << c.get_autor() << "," << c.get_gen() << "," << c.get_anul_aparitiei() << std::endl;
 	}
 }
 
@@ -18,16 +18,16 @@ vector <Carte> Repository::citire_din_fisier()
 	std::ifstream fin(fisier);
 	vector <Carte> lista;
 	string s;
-	while (std::getline(fin,s))
+	while (std::getline(fin, s))
 	{
 		string titlu, autor, gen;
 		int id, anul_aparitiei;
 
 		std::istringstream stream(s);
 		std::string parte;
-		
-		
-		getline(stream,parte, ',');
+
+
+		getline(stream, parte, ',');
 		id = atoi(parte.c_str());
 		getline(stream, parte, ',');
 		titlu = parte;
@@ -38,7 +38,7 @@ vector <Carte> Repository::citire_din_fisier()
 		getline(stream, parte, ',');
 		anul_aparitiei = atoi(parte.c_str());
 
-		Carte c = Carte(id,titlu,autor,gen,anul_aparitiei);
+		Carte c = Carte(id, titlu, autor, gen, anul_aparitiei);
 
 		lista.push_back(c);
 
@@ -48,11 +48,11 @@ vector <Carte> Repository::citire_din_fisier()
 }
 
 bool Repository::cautare_carte(int id) noexcept {
-	
-	
+
+
 	vector <Carte> lista = citire_din_fisier();
-	
-	
+
+
 	for (const Carte& c : lista)
 	{
 		if (c.get_id() == id)
@@ -119,15 +119,15 @@ Carte Repository::sterge_carte(int id) {
 }
 
 Carte Repository::modificare_titlu(int id, string titlu)
-{	
+{
 	vector <Carte> lista = citire_din_fisier();
 
-	if(lista.size() == 0)
+	if (lista.size() == 0)
 		throw ValidationError("Lista este goala!\n");
 	if (cautare_carte(id) == false)
 		throw ValidationError("Id-ul nu exista in lista!\n");
 	Carte carte_copie;
-	for(Carte& c : lista)
+	for (Carte& c : lista)
 		if (c.get_id() == id)
 		{
 			carte_copie = c;
@@ -144,7 +144,7 @@ Carte Repository::modificare_autor(int id, string autor)
 {
 	vector <Carte> lista = citire_din_fisier();
 
-	if(lista.size() == 0)
+	if (lista.size() == 0)
 		throw ValidationError("Lista este goala!\n");
 	if (cautare_carte(id) == false)
 		throw ValidationError("Id-ul nu exista in lista!\n");
@@ -182,7 +182,7 @@ Carte Repository::modificare_gen(int id, string gen)
 
 	updatare_fisier(lista);
 	return carte_copie;
-	
+
 }
 
 Carte Repository::modificare_an_aparitie(int id, int an_nou)
